@@ -12,7 +12,7 @@ const corsOptions = {
     if (process.env.ALLOWED_DOMAINS.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("fuck outta here"));
+      callback(new Error("someone is trying to hack this shit!"));
     }
   },
 };
