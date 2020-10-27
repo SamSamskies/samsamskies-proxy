@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const pick = require("lodash/pick");
 
 require("dotenv").config();
 
@@ -14,10 +15,13 @@ app.get("/withdraw/api/v1/links/:withdrawId", async (req, res) => {
         headers: { "X-Api-Key": process.env.LNBITS_READ_KEY },
       }
     );
+    const payload = req.query.fields
+      ? pick(data, req.query.fields.split(","))
+      : data;
 
     res.json(
       process.env.ALLOWED_DOMAINS.split(",").includes(req.host)
-        ? data
+        ? payload
         : "fuck outta here"
     );
   } catch (error) {
