@@ -14,9 +14,12 @@ app.get("/withdraw/api/v1/links/:withdrawId", async (req, res) => {
         headers: { "X-Api-Key": process.env.LNBITS_READ_KEY },
       }
     );
-    const { lnurl, ...rest } = data;
 
-    res.json(rest);
+    res.json(
+      process.env.ALLOWED_DOMAINS.split(",").includes(req.host)
+        ? data
+        : "fuck outta here"
+    );
   } catch (error) {
     res.status(error.response.status).json(error.response.data);
   }
